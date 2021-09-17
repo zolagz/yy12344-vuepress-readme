@@ -14,7 +14,8 @@ FIXME  2021/09/17 星期五
 - blog
   - 分类、分页、客户端API
 - google-analytics
-- last-updated
+- [last-updated/插件/最后更新时间/@vuepress/plugin-last-updated](https://vuepress.vuejs.org/zh/plugin/official/plugin-last-updated.html)
+  - [md/最后更新时间/使用说明](https://vuepress.vuejs.org/zh/theme/default-theme-config.html#%E6%9C%80%E5%90%8E%E6%9B%B4%E6%96%B0%E6%97%B6%E9%97%B4)
   - 默认主题自带
   - 自定义时，可以用 $page.lastUpdated 访问时间字符串
 - medium-zoom
@@ -22,6 +23,14 @@ FIXME  2021/09/17 星期五
 - pwa
 - register-components  在这个目录下的所有组件将会被注册为全局组件
 - search
+
+
+
+
+
+
+
+
 
 
 ## 插件/原理

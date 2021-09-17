@@ -10,11 +10,11 @@ FIXME  2021/09/17 星期五
 
 
 
+```?
+FIXME  2021/09/17 星期五
 
-[md/最后更新时间](https://vuepress.vuejs.org/zh/theme/default-theme-config.html#%E6%9C%80%E5%90%8E%E6%9B%B4%E6%96%B0%E6%97%B6%E9%97%B4)
-
-
-
+页面 `最后更新时间` last-updated 怎么隐藏？
+```
 
 
 
@@ -25,22 +25,52 @@ FIXME  2021/09/17 星期五
 
 
 ---
-## x、 md/网址链接
+## x、 md/vuepress框架/知识点
 
-### md/网址链接/目录结构
+### 网址链接=md/目录结构(框架自动)
 每一个 md 文件，都代表一个页面。
 每个目录下的 `README.md` 文件，代表一个路径的首页（相当于index.html）。
 
+#### 网址链接/层级
+
+todo
+比如： sl mp
+
+#### 网址链接/重定向
+在 enhanceApp.js 中对路由进行全局守卫
+
+页面使用组件，无法设置重定向
+``` JS
+// docs/sl/README.md
+---
+layout: PageIndex
+---
+```
+``` shell
+因为要在 router 对应一个路由的组件才可以触发
+如果没有将 App.vue 作为某个路由组件（一般不会吧） 就不会触发该导航守卫
+应该是想在每次进入应用时加载一些数据
+所以放在 App.vue 的 created 声命周期
+或者放在全局的路由钩子 router.beforeEach 里吧
+```
+
+永久链接 不行
+``` JS
+// docs/sl/README.md
+---
+permalink: /sl/guide
+---
+```
 
 
-
-### md/网址链接/永久链接
+### 永久链接(自定义)
 具体查看: 
 [永久链接/说明文档](https://vuepress.vuejs.org/zh/guide/permalinks.html)
 [链接失效/link rot/wiki](https://en.wikipedia.org/wiki/Link_rot)
 
 什么是 `永久链接` *--2021/09/17*  
 什么时候要用 `永久链接`? *--2021/09/17*  (希望文章的链接更加灵活，而不是局限于vuepress的docs目录结构)
+
 
 
 
@@ -163,20 +193,21 @@ md 中怎么使用 style 和 script ？
 ###  md/获取变量/全局计算属性
 具体查看: 
 [vuepress/md/网站的元数据/说明文档](https://vuepress.vuejs.org/zh/theme/writing-a-theme.html#网站和页面的元数据) 
-[vuepress/全局计算属性/说明文档](https://vuepress.vuejs.org/zh/guide/global-computed.html)*
+[vuepress/全局计算属性/说明文档](https://vuepress.vuejs.org/zh/guide/global-computed.html) *点击查看具体的变量对象*
 
 每个md文件，可以获取到如下变量
-`$route`
-`$router`
-`$site`
-`$page`
-`$frontmatter` = `$page.frontmatter` 当前页面头部 yaml 变量
-`$lang` 当前页面的语言
-`$localePath` 当前页面的 locale 路径前缀，默认值为 /
-`$title` 当前页面的 `<title>` 标签的值
-`$description` 用于当前页面的 `<meta name="description" content="...">` 的 content 值
-`$themeConfig` 即 `siteConfig.themeConfig`
-
+``` shell
+$route
+$router
+$site
+$page
+$frontmatter      =$page.frontmatter 当前页面头部 yaml 变量
+$lang             当前页面的语言
+$localePath       当前页面的 locale 路径前缀，默认值为 /
+$title            当前页面的标题
+$description      当前页面的描述
+$themeConfig      siteConfig.themeConfig
+```
 
 
 

@@ -15,11 +15,13 @@
 [Vue/服务端渲染SSR/说明文档](https://ssr.vuejs.org/zh/) *(当年写nuxt时，怎么没有看到这个！相见恨晚)*
 [md中使用Vue/说明文档](https://vuepress.vuejs.org/zh/guide/using-vue.html#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84-api-%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6) *看起来高级，用不到，但是应该知道*
 
-[vuepress/国际化/多语言/说明文档](https://vuepress.vuejs.org/zh/guide/i18n.html)
+[vuepress/国际化/多语言支持/说明文档](https://vuepress.vuejs.org/zh/guide/i18n.html)
 
 [vuepress/部署/说明文档](https://vuepress.vuejs.org/zh/guide/deploy.html)
 
 [vuepress/插件](https://vuepress.vuejs.org/zh/plugin/)
+
+[vuepress/术语](https://vuepress.vuejs.org/zh/miscellaneous/glossary.html) *不知道从哪里进去*
 
 
 

@@ -15,6 +15,9 @@
 
 
 
+
+
+
 ```?
 FIXME  2021/09/17 星期五
 
@@ -38,6 +41,119 @@ FIXME  2021/09/17 星期五
 一个文件夹中有多个文件，如何设置在一个侧边栏中？
 侧边栏可以是数组对象表示有多个分组，侧边栏是对象表示有多个侧边栏。
 
+### 侧边栏/路径
+
+侧边栏，对应的路径写法，如下
+``` JS
+module.exports = {
+  themeConfig: {
+    sidebar: {
+      '/sl/': [
+        {
+          title: '使用指南',
+          path: '/sl/guide/', /* 对应文件 sl/guide/README.md */
+          collapsable: true,
+          sidebarDepth: 3,
+          children: [
+            // 分组/折叠面板/显示项
+            '/sl/guide/use', /* 对应文件 sl/guide/use.md */
+            '/sl/guide/link', /* 对应文件 sl/guide/link.md */
+          ]
+        },
+        {
+          title: '插件应用',
+          path: '/sl/plugin/',
+        },
+      ]
+    }
+  }
+}
+```
+注意： 
+1. README.md 类型的文件 path 需要用 / 结尾表示
+2. 所有的文件路径需要写完整，不要相对 侧边栏key 去写 (有坑)
+
+### 复杂的侧边栏示例
+
+侧边栏 支持 多语言 每种语言都包含多个产品的文档 每个产品包含多个功能模块文档
+
+语言
+语言/产品
+语言/产品/功能
+语言/产品/功能/细化
+
+``` JS
+// .vuepress/config.js
+module.exports = {
+
+  // 自动显示所有页面的标题链接
+  displayAllHeaders: false, // 不自动
+
+  themeConfig: {
+
+    // 默认的语言/侧边栏/写在 themeConfig.sidebar 中
+    sidebar: {
+      // 产品/1
+      'p1': [
+        {
+          title: '产品/1/功能/1',
+          path: '/p1/f1/',  /* 对应文件 p1/f1/README.md */
+          collapsable: true, /* 有点卡.... */
+          sidebarDepth: 3, /* 显示所有页面的标题链接，层级 */
+          children: [
+            '/p1/f1/t1', /* 对应文件 p1/f1/t1.md */
+            '/p1/f1/t2', /* 对应文件 p1/f1/t2.md */
+          ]
+        },
+        {
+          title: '产品/1/功能/2',
+          path: '/p2/f2/',  /* 对应文件 p1/f2/README.md */
+        }
+      ],
+      // 产品/2
+      '/mp/': [
+          {
+            title: '产品/2/功能/1',
+            path: '/p2/f1/',
+          }
+      ],
+    }
+
+
+    // 别的语言/侧边栏/写在 themeConfig.对应语言 中
+    // 默认的语言/侧边栏/写在 themeConfig.对应语言.sidebar 中
+    '/en/': {
+      sidebar: {
+        // 产品/2
+        'p1': [
+          {
+            title: '产品/1/功能/1',
+            path: '/en/p1/f1/',  /* 对应文件 en/p1/f1/README.md */
+            collapsable: true,
+            sidebarDepth: 3,
+            children: [
+              '/en/p1/f1/t1', /* 对应文件 en/p1/f1/t1.md */
+              '/en/p1/f1/t2', /* 对应文件 en/p1/f1/t2.md */
+            ]
+          },
+          {
+            title: '产品/1/功能/2',
+            path: '/en/p2/f2/',  /* 对应文件 en/p1/f2/README.md */
+          }
+        ],
+        // 产品/2
+        '/mp/': [
+            {
+              title: '产品/2/功能/1',
+              path: '/en//p2/f1/',
+            }
+        ],
+      }
+    }
+  }
+}
+```
+
 
 
 
@@ -46,7 +162,7 @@ FIXME  2021/09/17 星期五
 ## x、修改默认页面
 
 ### 修改默认页面/404
-404页面自定义修改，新建 theme/layouts/NotFound.vue，然后重启服务，就可以看到自定义的404页面了。
+404页面自定义修改，新建 `.vuepress/theme/layouts/NotFound.vue`，然后重启服务，就可以看到自定义的404页面了。
 emm...404的页面是变了，但是别的页面也全都变化了...
 因为这个操作等于使用了一个新的主题，该主题应该继承一下默认主题，所以需要新建 theme/index.js。
 ``` JS
@@ -132,8 +248,44 @@ theme
 
 ---
 ## x、 md/自定义样式
-```?
-FIXME  2021/09/17 星期五
 
-怎么自定义样式？
+有如下3中自定义样式的方法，他们有什么区别？
+### 特定页面的自定义布局
+`特定页面的自定义布局` : 使用默认主题，只是某个页面用自己的 vue
+[特定页面的自定义布局](https://vuepress.vuejs.org/zh/theme/default-theme-config.html#%E7%89%B9%E5%AE%9A%E9%A1%B5%E9%9D%A2%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B8%83%E5%B1%80)  
+
+场景：自定义首页布局 `.vuepress/components/XmLayoutIndex.vue`
+
+``` shell
+# 在某个 md 中使用 XmLayoutIndex 布局
+---
+layout: XmLayoutIndex
+---
 ```
+
+### 主题的继承
+`主题的继承` : 基于默认主题，自己写一整套主题
+[主题的继承](https://vuepress.vuejs.org/zh/theme/inheritance.html)
+
+场景：自定义每个页面的导航栏布局
+
+``` JS
+// .vuepress/theme/index.js
+// 注意： 看到 vuepress 项目中有 `.vuepress/theme/index.js` ，内容如下，表示使用了继承默认主题的自定义主题哈～
+export default {
+  extend: '@vuepress/theme-default'
+}
+```
+
+FIXME 可能需要安装相关插件 访问父级组件
+[示例/主题的继承](https://github.com/vuejs/vuepress/tree/master/packages/%40vuepress/theme-vue)
+[默认主题](https://github.com/vuejs/vuepress/tree/master/packages/%40vuepress/theme-default) *基于默认主题，自己写一整套主题，需要查看*
+
+
+
+
+### 开发主题
+`开发主题` : 自己写一整套主题
+[开发主题](https://vuepress.vuejs.org/zh/theme/writing-a-theme.html)
+
+场景：大佬...
