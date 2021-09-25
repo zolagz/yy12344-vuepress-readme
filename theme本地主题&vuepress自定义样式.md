@@ -2,6 +2,7 @@
 [主题/theme/说明文档](https://vuepress.vuejs.org/zh/theme/)
 [默认主题配置/说明文档](https://vuepress.vuejs.org/zh/theme/default-theme-config.html)
 [自定义主题/说明文档](https://vuepress.vuejs.org/zh/theme/)
+[默认主题配置/仓库](https://github.com/vuejs/vuepress/blob/master/packages/%40vuepress/theme-default) *继承默认主题，自定义主题*
 
 通过上面的说明文档，就可以配置主题了！
 - 导航栏: 页面标题、搜索框、 导航栏链接、多语言切换、仓库链接
@@ -40,6 +41,75 @@ FIXME  2021/09/17 星期五
 
 一个文件夹中有多个文件，如何设置在一个侧边栏中？
 侧边栏可以是数组对象表示有多个分组，侧边栏是对象表示有多个侧边栏。
+
+
+多个侧边栏:
+``` JS
+// 单个侧边栏 (注意，观察/单个侧边栏/数据类型)
+sidebar: [
+  // String   路径          '/path1/page1'
+  // Array    [路径,名称]    ['/path1/page1', '侧边栏显示名称']
+  // Object   分组对象       { title: '分组显示名称', path: '/path1/page1' } 具体示例看下面
+]
+
+// 多个侧边栏 (原理:一个路径/匹配/一个侧边栏/数据)
+// 如何理解 sidebar 某个路径 key对应的数组？ 
+// (把这个数组看成单个侧边栏 sidebar 去设置即可，数据类型看上面。)
+sidebar: {
+  '路径1/对应/侧边栏': [],
+  '路径2/对应/侧边栏': [],
+}
+
+// 侧边栏分组 (原理:单个侧边栏/数据类型/支持/分组对象)
+sidebar: [
+  // 分组对象
+  {
+    title: '分组显示名称',
+    path: '分组显示名称/点击跳转的路径(可以不写)',
+    sidebarDepth: '分组下的页面/自动显示侧边栏(标题链接)层级深度',
+    collapsable: '分组显示名称/是否展示收起按钮(不展示，默认全部展开)',
+    children: ['分组下的页面'],
+  }
+  // 可以，再来一个分组对象
+  // {...}
+]
+
+// 多个侧边栏/某个路径的侧边栏分组 
+// (原理:sidebar 某个路径 key对应的数组，等同于单个侧边栏 sidebar 的配置，且支持分组。)
+sidebar: {
+  '路径1/对应/侧边栏': [
+    {
+      title: '分组1',
+      children: []
+    },
+    {
+      title: '分组2',
+      children: []
+    }
+  ],
+}
+
+// 多个侧边栏/某个路径的侧边栏分组/嵌套/侧边栏分组
+// 如何理解 children 对应的数组？ 
+// (把这个数组看成单个侧边栏 sidebar 去设置即可，数据类型看上面。)
+sidebar: {
+  '路径1/对应/侧边栏': [
+    {
+      title: '大标题(比如：路径1)',
+      children: [
+        {
+          title: '分组1',
+          children: []
+        },
+        {
+          title: '分组2',
+          children: []
+        }
+      ]
+    }
+  ],
+}
+```
 
 ### 侧边栏/路径
 
